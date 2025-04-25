@@ -45,10 +45,10 @@ export default function ExerciseMap() {
   const [activeFilter, setActiveFilter] = useState<ExerciseType | "all">("all")
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null)
   const [locationAttempted, setLocationAttempted] = useState(false)
-  const [isBrowser, setIsBrowser] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    setIsBrowser(true)
+    setIsMounted(true)
 
     // Get user's location if they allow it
     if (typeof navigator !== "undefined" && navigator.geolocation) {
@@ -96,6 +96,16 @@ export default function ExerciseMap() {
       default:
         return "bg-gray-500"
     }
+  }
+
+  if (!isMounted) {
+    return (
+      <div className="w-full flex items-center justify-center p-8">
+        <div className="text-center">
+          <p className="text-lg font-medium">Initializing...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -170,16 +180,14 @@ export default function ExerciseMap() {
         </Card>
       </div>
 
-      {isBrowser && (
-        <MapContainerComponent
-          mapCenter={mapCenter}
-          userLocation={userLocation}
-          filteredLocations={filteredLocations}
-          selectedLocation={selectedLocation}
-          handleMarkerClick={handleMarkerClick}
-          getTypeColor={getTypeColor}
-        />
-      )}
+      <MapContainerComponent
+        mapCenter={mapCenter}
+        userLocation={userLocation}
+        filteredLocations={filteredLocations}
+        selectedLocation={selectedLocation}
+        handleMarkerClick={handleMarkerClick}
+        getTypeColor={getTypeColor}
+      />
     </>
   )
 }

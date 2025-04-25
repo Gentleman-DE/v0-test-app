@@ -1,5 +1,5 @@
-import ExerciseMap from "@/components/exercise-map"
 import type { Metadata } from "next"
+import ExerciseMapWrapper from "@/components/exercise-map-wrapper"
 
 export const metadata: Metadata = {
   title: "Exercise Map Explorer",
@@ -17,7 +17,7 @@ export default function Home() {
       </header>
 
       <div className="flex-1 flex flex-col md:flex-row">
-        <ExerciseMap />
+        <ExerciseMapWrapper />
       </div>
     </main>
   )
